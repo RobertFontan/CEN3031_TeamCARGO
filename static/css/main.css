@@ -1,37 +1,27 @@
-body, html {
+html {
     margin: 0;
     font-family: sans-serif;
     background-color: lightblue;
 }
 
-.content {
-    margin: 0 auto;
-    width: 400px;
+body{
+    background: #3333;
+    font-family: sans-serif;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
-table, td, th {
-    border: 1px solid #aaa;
+.cover{
+    width: 900px;
+    height: 400px;
+    margin-top: 50px;
+    display: flex;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
+img{
+    width: 300px;
+    height: 200px;
+    display: flex;
 }
 
-th {
-    height: 30px;
-}
-
-td {
-    text-align: center;
-    padding: 5px;
-}
-
-.form {
-    display: inline-block;
-    margin-top: 20px;
-}
-
-#content {
-    width: 70%;
-}
