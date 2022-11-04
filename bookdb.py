@@ -1,11 +1,8 @@
 from regex import B
-from sqlalchemy import Column, Integer, Unicode, UnicodeText, String
+from sqlalchemy import Column, Integer, UnicodeText
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
-from random import choice
-from string import letters
 
 from book import Book
 
@@ -19,7 +16,7 @@ class SerializedBook(Base):
     author = Column(UnicodeText)
     rating = Column(UnicodeText)
     genre = Column(UnicodeText)
-    coverurl = Column(UnicodeText)
+    coverUrl = Column(UnicodeText)
 
     def __init__(self, book):
         self.isbn = book.isbn
@@ -40,6 +37,7 @@ def create_session():
 
 def add_books(session, books):
     session.add_all([SerializedBook(b) for b in books])
+    session.commit()
 
 def add_book(session, book):
     add_books(session, [book])
