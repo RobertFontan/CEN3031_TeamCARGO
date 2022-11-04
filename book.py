@@ -1,6 +1,8 @@
 import json
 from urllib.request import urlopen
 
+from numpy import cov
+
 api = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
 
 
@@ -27,7 +29,7 @@ def lookup_isbn(isbn):
         coverUrl = bookInfo['imageLinks']['smallThumbnail'] 
         formattedInfo = json.dumps(bookObject, indent=2)    
         # if you want organized book info 
-        #print(formattedInfo)
+        print(coverUrl)
         newBook = Book(isbn, title, author, rating, genre, coverUrl)
         return newBook
     except Exception:
@@ -36,4 +38,8 @@ def lookup_isbn(isbn):
 def getCover(self):
     return self.coverUrl
     
-    
+def lookup_cover(isbn):
+    resp = urlopen(api + isbn)
+    bookObject = json.load(resp)
+    bookInfo = bookObject['items'][0]['volumeInfo']                
+    return bookInfo['imageLinks']['smallThumbnail'] 

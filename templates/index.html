@@ -3,21 +3,17 @@
         <title>
             Encyclomedia
         </title>
-        <meta name="Viewport" conten="width=device-width, initial-scale=1">
-        <meta http-equiv="refresh" content="30;url=http://127.0.0.1:5000/">
-        <style>
-            body{
-                background-color: #FFFFFF;
-                background-repeat: no-repeat;                
-            }
-        </style>
     </head>
     <body>
+       <form action="/" method="POST">
+        <input type="text" name="u" id="u">
+        <input type="submit" value="Add Book">
+       </form>
         <h1>
-            <p>Encyclomedia</p>
-            <p><img src="{{coverURL}}"</p>
-            <p>Title: {{title}}</p>
-            <p>By author: {{author}}</p>
+        {% for book in books %}
+            <p><img src="{{book.coverUrl}}"</p>
+            
+        {% endfor %}
         </h1>
     </body>
 </html>
