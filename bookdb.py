@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from book import Book
 
-engine = create_engine('sqlite:///library.db', echo=True)
+engine = create_engine('sqlite:///library.db', echo=False)
 Base = declarative_base(bind=engine)
 
 class SerializedBook(Base):
@@ -44,3 +44,7 @@ def add_book(session, book):
 
 def get_books(session):
     return [b.deserialize() for b in session.query(SerializedBook)]
+
+def remove_book(session, isbn):
+    session.query(SerializedBook).filter_by(isbn=isbn).delete()
+    session.commit()
