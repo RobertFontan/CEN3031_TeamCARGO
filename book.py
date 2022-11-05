@@ -1,7 +1,6 @@
 import json
 from urllib.request import urlopen
 
-from numpy import cov
 
 api = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
 
