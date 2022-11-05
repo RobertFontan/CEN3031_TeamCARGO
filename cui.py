@@ -75,7 +75,7 @@ class AddBookView(Frame):
 		layout = Layout([1], True)
 		self.add_layout(layout)
 		layout.add_widget(Text("ISBN:", "isbn"))
-		layout.add_widget(CheckBox("Electronic"))
+		layout.add_widget(CheckBox("Electronic", name="electronic"))
 		
 		layout2 = Layout([1, 1, 1, 1])
 		self.add_layout(layout2)
@@ -87,6 +87,7 @@ class AddBookView(Frame):
 	def _lookup(self):
 		self.save()
 		result = book.lookup_isbn(self.data["isbn"])
+		result.electronic = self.data["electronic"]
 		self._model.add_book(result)
 		self._scene.remove_effect(self)
 		self._callback()

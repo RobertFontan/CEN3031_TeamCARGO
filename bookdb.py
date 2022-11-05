@@ -1,5 +1,5 @@
 from regex import B
-from sqlalchemy import Column, Integer, UnicodeText
+from sqlalchemy import Column, Integer, UnicodeText, Boolean
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -17,6 +17,7 @@ class SerializedBook(Base):
     rating = Column(UnicodeText)
     genre = Column(UnicodeText)
     coverUrl = Column(UnicodeText)
+    electronic = Column(Boolean)
 
     def __init__(self, book):
         self.isbn = book.isbn
@@ -25,9 +26,10 @@ class SerializedBook(Base):
         self.rating = book.rating
         self.genre = book.genre
         self.coverUrl = book.coverUrl
+        self.electronic = book.electronic
     
     def deserialize(self):
-        return Book(self.isbn, self.title, self.author, self.rating, self.genre, self.coverUrl)
+        return Book(self.isbn, self.title, self.author, self.rating, self.genre, self.coverUrl, self.electronic)
 
 Base.metadata.create_all()
 
