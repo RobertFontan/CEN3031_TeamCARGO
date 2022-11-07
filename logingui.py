@@ -2,10 +2,12 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
+from mainlibrarygui import mainLibGUI
+
 class titleScreen(tk.Tk):
     def loginButton(self):
         self.destroy()  # destroy current window
-        self.app = libraryScreen()
+        self.app = mainLibGUI()
 
     #goes to new user window
     def newUser(self):
@@ -70,35 +72,26 @@ class titleScreen(tk.Tk):
 
     def welcomeButton(self):
         self.destroy()  # destroy current window
-        self.app = loginScreen()
+        self.app = ()
 
     def start(self):
         self.mainloop()
 
 
 
-class libraryScreen(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry("300x200")
-        self.title("Encyclomedia")
-        self.config(background="")      
-        testlable = tk.Label(self, text="library goes here")
-        testlable.pack()
+# class libraryScreen(tk.Tk):
+#     def __init__(self):
+#         super().__init__()
+#         self.geometry("300x200")
+#         self.title("Encyclomedia")
+#         self.config(background="")      
+#         testlable = tk.Label(self, text="library goes here")
+#         testlable.pack()
 
 
 
 
 
-    """
-    class newWindow(tk.Tk):  
-        def __init__(self):
-            super().__init__()
-            self.scoretext = tk.Label(self, text="Cancel pressed")
-            self.scoretext.pack()
-    """
 
 
 titleScreen().start()
-
-
