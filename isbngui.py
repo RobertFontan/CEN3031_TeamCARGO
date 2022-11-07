@@ -6,70 +6,66 @@ from PIL import ImageTk, Image
 # pip install pillow
 
 
-class GUI:
+class isbnGUI(tk.Tk):
     def __init__(self):
-        self.root = tk.Tk()
-        self.root.geometry("800x800")
-        self.root.title("Encyclomedia")
+        super().__init__()
+        # self.root = tk.Tk()
+        self.geometry("500x500")
+        self.title("Encyclomedia")
     
 
-        self.label = tk.Label(self.root, text="Library", font=('Arial', 18))
-        self.label.pack(padx=10, pady=10)
+        label = tk.Label(self, text="Library", font=('Arial', 18))
+        label.pack(padx=10, pady=10)
         
-        self.textbox = tk.Text(self.root, height=1, width=50, font=('Arial', 16))
+        self.textbox = tk.Text(self, height=1, width=50, font=('Arial', 16))
         self.textbox.pack(padx=10, pady=10)
         
-        self.frame = tk.Frame(self.root)
-        self.frame.pack()
+        frame = tk.Frame(self)
+        frame.pack()
         
-        self.bookGrid = tk.Label(self.frame)
+        self.bookGrid = tk.Label(frame)
         self.bookGrid.pack(side=tk.LEFT)
         
         
-        self.button = tk.Button(self.root, text="Add ISBN", font=('Arial', 18), command=self.add_cover)
-        self.button.pack(padx=10, pady=10)
+        button = tk.Button(self, text="Add ISBN", font=('Arial', 18), command=self.add_cover)
+        button.pack(padx=10, pady=10)
         
-        self.root.mainloop()
+        self.mainloop()
         
     def add_cover(self):
-        
         new_isbn = self.textbox.get('1.0', tk.END)
         new_cover = lookup_cover(new_isbn)        
-        #print(new_cover)
-        
-        tempList = ['9780394533056',
-                    '9780553593716',
-                    '0735219095',
-                    '1791392792',
-                    '1501161938',
-                    '0062653318',
-                    '1538719843']
-        
+        # print(new_cover)
+        # returnCover(new_cover)
         
         u = urlopen(new_cover)
         raw_data = u.read()
         u.close()
         image = ImageTk.PhotoImage(data=raw_data) 
+        
+        print(image)
         self.bookGrid.configure(image=image)
         self.bookGrid.image = image 
         
-        # mg = tk.Label(self.bookGrid,image=photo, text= new_isbn, font=('Arial', 18))
         
-        # self.newBook.grid(row=1, column=1, sticky=tk.W +tk.E)
-        # self.newBook.place(x=200, y= 200)
-        # self.newBook.grid(row = 0, column=0, sticky=tk.W + tk.E)
-       
         
-        # the stranger 9780394533056
-        # Game of Thrones 9780553593716
+        self.destroy
+        
+           
+def returnCover(isbn):
+    return 
 
 
+#isbnGUI()
+
+
+
+   
+        # tempList = ['9780394533056',
+        #             '9780553593716',
+        #             '0735219095',
+        #             '1791392792',
+        #             '1501161938',
+        #             '0062653318',
+        #             '1538719843']
         
-    # def show_message(self):
-    #     if self.check_state.get() == 0:
-    #         print(self.textbox.get('1.0', tk.END))
-    #     else:
-    #         messagebox.showinfo(title="Message", message=self.textbox.get('1.0', tk.END))
-            
-    
-GUI()
