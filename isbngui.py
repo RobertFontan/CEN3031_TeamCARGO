@@ -5,7 +5,7 @@ from io import BytesIO
 from PIL import ImageTk, Image
 # pip install pillow
 
-
+currentISBN = None
 class isbnGUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -35,25 +35,23 @@ class isbnGUI(tk.Tk):
     def add_cover(self):
         new_isbn = self.textbox.get('1.0', tk.END)
         new_cover = lookup_cover(new_isbn)        
-        # print(new_cover)
-        # returnCover(new_cover)
+        
         
         u = urlopen(new_cover)
         raw_data = u.read()
         u.close()
         image = ImageTk.PhotoImage(data=raw_data) 
         
-        print(image)
         self.bookGrid.configure(image=image)
         self.bookGrid.image = image 
         
-        
-        
-        self.destroy
+        currentISBN = new_cover
+
+        self.destroy()
         
            
-def returnCover(isbn):
-    return 
+def returnCover():
+    return currentISBN
 
 
 #isbnGUI()

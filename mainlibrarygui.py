@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter.ttk import *
 from book import *
 from io import BytesIO
 from PIL import ImageTk, Image
@@ -89,12 +90,6 @@ class mainLibGUI(tk.Tk):
         bookFrame.pack(fill='x')
         self.mainloop()
 
-    def addIsbn(self):
-        self.app = isbnGUI()
-        coverList.append()
-        
-
-
     def replaceCovers(self):
         #self = mainLibGUI()
         i = 0
@@ -130,6 +125,37 @@ class mainLibGUI(tk.Tk):
                 pass
             
             bookCounter = bookCounter + 1
+    
+    def addIsbn(self):
+        new = tk.Toplevel(self)
+        
+        textbox = tk.Text(new, height=1, width=50, font=('Arial', 16))
+        textbox.pack(padx=10, pady=10)
+        
+        button = tk.Button(new, text="Add ISBN", font=('Arial', 18), command=add_cover)
+        button.pack(padx=10, pady=10)
+        
+        
+        #coverList.append(newCoverURL)
+        
+        new.mainloop()
+        
+        def add_cover(new):
+            print("made it to new window")
+            new.destroy()
+        # def add_cover(new):
+        #     new_isbn = new.textbox.get('1.0', tk.END)
+        #     new_cover = lookup_cover(new_isbn)        
+        
+        
+        #     u = urlopen(new_cover)
+        #     raw_data = u.read()
+        #     u.close()
+        #     image = ImageTk.PhotoImage(data=raw_data) 
+        
+        
+        # self.app = isbnGUI()
+        # coverList.append(returnCover())
+        # self.replaceCovers()
 
-
-#mainLibGUI()
+mainLibGUI()
