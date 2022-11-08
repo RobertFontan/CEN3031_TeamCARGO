@@ -11,7 +11,6 @@ from isbngui import *
 
 
 coverList = []
-bookCounter = 0
 
 
 class mainLibGUI(tk.Tk):
@@ -21,19 +20,15 @@ class mainLibGUI(tk.Tk):
         self.geometry("800x800")
         self.title("Encyclomedia")
         
-        button = tk.Button(self, text=">", font=('Arial', 18), command=self.replaceCovers)
+        button = tk.Button(self, text="Update Books", font=('Arial', 18), command=self.replaceCovers)
         button.pack(padx=10, pady=10)
         #self.button.place()
         
-        isbnButton = tk.Button(self, text="Add a book!", font=('Arial', 18), command=self.addIsbn)
+        isbnButton = tk.Button(self, text="Add a book", font=('Arial', 18), command=self.addIsbn)
         isbnButton.pack(padx=10, pady=10)
         
         label = tk.Label(self, text="Your Bookshelf", font=('Arial', 18))
         label.pack(padx=20, pady=20)
-
-
-
-
         bookFrame = tk.Frame(self)
         bookFrame.columnconfigure(0)
         bookFrame.columnconfigure(1)
@@ -55,50 +50,34 @@ class mainLibGUI(tk.Tk):
         
         self.book4 = tk.Label(bookFrame)
         self.book4.grid(row=0, column=4)
-
-        # counter = 0
-
         
-        # for isbn in book:
-        #     newCover = lookup_cover(isbn)   
-        #     bookCover.append(newCover)    
-
-
-        # for cover in bookCover:
-        #     print(cover)
-        #     u = urlopen(cover)
-        #     raw_data = u.read()
-        #     u.close()
-        #     image = ImageTk.PhotoImage(data=raw_data) 
-            
-        #     if counter == 0:
-        #         self.book0.configure(image=image)
-        #         self.book0.image = image
-        #     elif counter == 1:
-        #         self.book1.configure(image=image)
-        #         self.book1.image = image
-        #     elif counter == 2:
-        #         self.book2.configure(image=image)
-        #         self.book2.image = image
-        #     elif counter == 3:
-        #         self.book3.configure(image=image)
-        #         self.book3.image = image
-        #     else:
-        #         pass
-        #     counter = counter + 1
+        self.book5 = tk.Label(bookFrame)
+        self.book5.grid(row=1, column=0)
+        
+        self.book6 = tk.Label(bookFrame)
+        self.book6.grid(row=1, column=1)
+        
+        self.book7 = tk.Label(bookFrame)
+        self.book7.grid(row=1, column=2)
+        
+        self.book8 = tk.Label(bookFrame)
+        self.book8.grid(row=1, column=3)
+        
+        self.book9 = tk.Label(bookFrame)
+        self.book9.grid(row=1, column=4)
+        
+        
 
         bookFrame.pack(fill='x')
+        
+
+                
         self.mainloop()
 
-    def replaceCovers(self):
-        #self = mainLibGUI()
-        i = 0
-        #replaceList = ['1501161938','0062653318','1538719843','9780439756686']
-        # newBookCover = []
-        # for isbn in replaceList:
-        #     newnewCover = lookup_cover(isbn)   
-        #     newBookCover.append(newnewCover)    
+    
 
+    def replaceCovers(self):
+        bookCounter = 0
         for cv in coverList:
             print(cv)
             u = urlopen(cv)
@@ -121,41 +100,76 @@ class mainLibGUI(tk.Tk):
             elif bookCounter == 4:
                 self.book4.configure(image=image)
                 self.book4.image = image
+            elif bookCounter == 5:
+                self.book5.configure(image=image)
+                self.book5.image = image
+            elif bookCounter == 6:
+                self.book6.configure(image=image)
+                self.book6.image = image
+            elif bookCounter == 7:
+                self.book7.configure(image=image)
+                self.book7.image = image
+            elif bookCounter == 8:
+                self.book8.configure(image=image)
+                self.book8.image = image
+            elif bookCounter == 9:
+                self.book9.configure(image=image)
+                self.book9.image = image                
             else:
                 pass
             
             bookCounter = bookCounter + 1
+            
     
     def addIsbn(self):
-        new = tk.Toplevel(self)
+        addCoverGUI().start()
+        print(addCoverGUI)
+        self.replaceCovers()
+        #pass
+        #replaceCovers()
+        #coverList.append(newCoverURL)
+         
+
+class addCoverGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("200x200")
         
-        textbox = tk.Text(new, height=1, width=50, font=('Arial', 16))
-        textbox.pack(padx=10, pady=10)
+        self.textbox = tk.Text(self, height=1, width=50, font=('Arial', 16))
+        self.textbox.pack(padx=10, pady=10)
         
-        button = tk.Button(new, text="Add ISBN", font=('Arial', 18), command=add_cover)
+        button = tk.Button(self, text="Add ISBN", font=('Arial', 18), command=self.add_cover)
         button.pack(padx=10, pady=10)
         
+        self.mainloop()
         
-        #coverList.append(newCoverURL)
+    def add_cover(self):
+        new_isbn = self.textbox.get('1.0', tk.END)
+        try:
+            new_cover = lookup_cover(new_isbn)
+            coverList.append(new_cover)
+            self.destroy()
+        except Exception:
+            messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
         
-        new.mainloop()
+    def start(self):
+        self.mainloop()
         
-        def add_cover(new):
-            print("made it to new window")
-            new.destroy()
-        # def add_cover(new):
-        #     new_isbn = new.textbox.get('1.0', tk.END)
-        #     new_cover = lookup_cover(new_isbn)        
+    def state(self):
+        return self.state()
         
-        
-        #     u = urlopen(new_cover)
-        #     raw_data = u.read()
-        #     u.close()
-        #     image = ImageTk.PhotoImage(data=raw_data) 
-        
-        
-        # self.app = isbnGUI()
-        # coverList.append(returnCover())
-        # self.replaceCovers()
+#mainLibGUI()
 
-mainLibGUI()
+
+ 
+        # tempList = ['9780394533056',
+        #             '9780553593716',
+        #             '0735219095',
+        #             '1791392792',
+        #             '1501161938',
+        #             '0062653318',
+        #             '1538719843']
+        
+
+
+

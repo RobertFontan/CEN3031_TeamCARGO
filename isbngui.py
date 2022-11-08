@@ -36,6 +36,8 @@ class isbnGUI(tk.Tk):
         new_isbn = self.textbox.get('1.0', tk.END)
         new_cover = lookup_cover(new_isbn)        
         
+        new_cover 
+        
         
         u = urlopen(new_cover)
         raw_data = u.read()
@@ -47,12 +49,14 @@ class isbnGUI(tk.Tk):
         
         currentISBN = new_cover
 
-        self.destroy()
+       # self.destroy()
         
            
 def returnCover():
     return currentISBN
 
+
+#isbnGUI()
 
 #isbnGUI()
 
