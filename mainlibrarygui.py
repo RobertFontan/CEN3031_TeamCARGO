@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter.ttk import *
 from book import *
+from tkinter import *
 from io import BytesIO
 from PIL import ImageTk, Image
 
@@ -19,6 +20,12 @@ class mainLibGUI(tk.Tk):
         
         self.geometry("800x800")
         self.title("Encyclomedia")
+
+        #adds a background
+        bg2 = PhotoImage(file="images/libraryBR.png")
+        #set and add backround
+        gui_bk = Label(self, image=bg2)
+        gui_bk.place(x=0, y=0, relwidth=1, relheight=1)
         
         button = tk.Button(self, text="Update Books", font=('Arial', 18), command=self.replaceCovers)
         button.pack(padx=10, pady=10)
