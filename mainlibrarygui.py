@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import simpledialog
 from tkinter.ttk import *
 from book import *
 from tkinter import *
@@ -129,43 +130,26 @@ class mainLibGUI(tk.Tk):
             
     
     def addIsbn(self):
-        addCoverGUI().start()
-        print(addCoverGUI)
-        self.replaceCovers()
-        #pass
-        #replaceCovers()
-        #coverList.append(newCoverURL)
-         
-
-class addCoverGUI(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry("200x200")
-        
-        self.textbox = tk.Text(self, height=1, width=50, font=('Arial', 16))
-        self.textbox.pack(padx=10, pady=10)
-        
-        button = tk.Button(self, text="Add ISBN", font=('Arial', 18), command=self.add_cover)
-        button.pack(padx=10, pady=10)
-        
-        self.mainloop()
-        
-    def add_cover(self):
-        new_isbn = self.textbox.get('1.0', tk.END)
+                
+        isbn = simpledialog.askstring("Input", "Add a ISBN",
+                                 parent=self)
+       #print(isbn)
+        if isbn == None:
+                return
         try:
-            new_cover = lookup_cover(new_isbn)
-            coverList.append(new_cover)
-            self.destroy()
+            cover = lookup_cover(isbn)
+            coverList.append(cover)
+            self.replaceCovers()
+            
+
         except Exception:
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
+
         
-    def start(self):
-        self.mainloop()
+       
+         
         
-    def state(self):
-        return self.state()
-        
-#mainLibGUI()
+mainLibGUI()
 
 
  
