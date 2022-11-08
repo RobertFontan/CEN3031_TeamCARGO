@@ -79,17 +79,6 @@ class titleScreen(tk.Tk):
         
 
 
-# class libraryScreen(tk.Tk):
-#     def __init__(self):
-#         super().__init__()
-#         self.geometry("300x200")
-#         self.title("Encyclomedia")
-#         self.config(background="")      
-#         testlable = tk.Label(self, text="library goes here")
-#         testlable.pack()
-
-
-
 
 
 
