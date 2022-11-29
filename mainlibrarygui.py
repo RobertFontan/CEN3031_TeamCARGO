@@ -7,12 +7,13 @@ from tkinter import *
 from io import BytesIO
 from PIL import ImageTk, Image
 
-#tempList = ['9783426452936','9780553593716','0735219095','1791392792']
+#coverList = ['9783426452936','9780553593716','0735219095','1791392792']
                 
 from isbngui import *
 
 
 coverList = []
+favList = []
 
 
 class mainLibGUI(tk.Tk):
@@ -25,53 +26,60 @@ class mainLibGUI(tk.Tk):
         #adds a background
         bg2 = PhotoImage(file="images/libraryBR.png")
         #set and add backround
-        gui_bk = Label(self, image=bg2)
+        gui_bk = Label(self, image = bg2, bg="black")
         gui_bk.place(x=0, y=0, relwidth=1, relheight=1)
+        
         
         button = tk.Button(self, text="Update Books", font=('Arial', 18), command=self.replaceCovers)
         button.pack(padx=10, pady=10)
-        #self.button.place()
         
         isbnButton = tk.Button(self, text="Add a book", font=('Arial', 18), command=self.addIsbn)
         isbnButton.pack(padx=10, pady=10)
         
-        label = tk.Label(self, text="Your Bookshelf", font=('Arial', 18))
+        achButton = tk.Button(self, text= "View Achievements", font=('Arial', 18), command=self.viewAch)
+        achButton.pack()
+        
+        label = Label(self, text="Your Bookshelf", font=('Arial', 18))
         label.pack(padx=20, pady=20)
-        bookFrame = tk.Frame(self)
+        
+        bookFrame = Frame(self, bg="brown")
+        bookFrame.pack()
+        
+        
         bookFrame.columnconfigure(0)
         bookFrame.columnconfigure(1)
         bookFrame.columnconfigure(2)
         bookFrame.columnconfigure(3)
         bookFrame.columnconfigure(4)
 
-        self.book0 = tk.Label(bookFrame)
-        self.book0.grid(row=0, column=0)
+        self.book0 = tk.Button(bookFrame, bg="brown", command=self.setFav)
+        self.book0.grid(row=0, column=0, )
 
-        self.book1 = tk.Label(bookFrame)
+        self.book1 = tk.Label(bookFrame, bg="brown")
         self.book1.grid(row=0, column=1)
 
-        self.book2 = tk.Label(bookFrame)
+        self.book2 = tk.Label(bookFrame, bg="brown")
         self.book2.grid(row=0, column=2)
 
-        self.book3 = tk.Label(bookFrame)
+        self.book3 = tk.Label(bookFrame, bg="brown")
         self.book3.grid(row=0, column=3)
         
-        self.book4 = tk.Label(bookFrame)
+        self.book4 = tk.Label(bookFrame, bg="brown")
         self.book4.grid(row=0, column=4)
         
-        self.book5 = tk.Label(bookFrame)
+        self.book5 = tk.Label(bookFrame, bg="brown")
         self.book5.grid(row=1, column=0)
         
-        self.book6 = tk.Label(bookFrame)
+        self.book6 = tk.Label(bookFrame, bg="brown")
         self.book6.grid(row=1, column=1)
         
-        self.book7 = tk.Label(bookFrame)
+        self.book7 = tk.Label(bookFrame, bg="brown")
         self.book7.grid(row=1, column=2)
         
-        self.book8 = tk.Label(bookFrame)
+        self.book8 = tk.Label(bookFrame, bg="brown")
         self.book8.grid(row=1, column=3)
         
-        self.book9 = tk.Label(bookFrame)
+        self.book9 = tk.Label(bookFrame, bg="brown")
         self.book9.grid(row=1, column=4)
         
         
@@ -130,37 +138,33 @@ class mainLibGUI(tk.Tk):
             
     
     def addIsbn(self):
-                
+        #self.gui_bk.image = self.gui_bk.image
+
         isbn = simpledialog.askstring("Input", "Add a ISBN",
                                  parent=self)
        #print(isbn)
         if isbn == None:
                 return
+        
         try:
             cover = lookup_cover(isbn)
             coverList.append(cover)
             self.replaceCovers()
-            
 
         except Exception:
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
 
         
-       
+    def viewAch(self):
+        return
+    
+    def setFav(self):
+        pass
          
         
 mainLibGUI()
 
 
- 
-        # tempList = ['9780394533056',
-        #             '9780553593716',
-        #             '0735219095',
-        #             '1791392792',
-        #             '1501161938',
-        #             '0062653318',
-        #             '1538719843']
-        
 
 
 
