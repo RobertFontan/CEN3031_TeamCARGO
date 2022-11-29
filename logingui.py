@@ -79,8 +79,4 @@ class titleScreen(tk.Tk):
         
 
 
-
-
-
-
 titleScreen().start()
