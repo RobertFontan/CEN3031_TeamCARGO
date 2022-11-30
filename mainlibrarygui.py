@@ -6,6 +6,7 @@ from book import *
 from tkinter import *
 from io import BytesIO
 from PIL import ImageTk, Image
+from tkinter import ttk
 
 #coverList = ['9783426452936','9780553593716','0735219095','1791392792']
                 
@@ -36,7 +37,7 @@ class mainLibGUI(tk.Tk):
         isbnButton = tk.Button(self, text="Add a book", font=('Arial', 18), command=self.addIsbn)
         isbnButton.pack(padx=10, pady=10)
         
-        achButton = tk.Button(self, text= "View Achievements", font=('Arial', 18), command=self.viewAch)
+        achButton = tk.Button(self, text= "View Statisics", font=('Arial', 18), command=self.viewStats)
         achButton.pack()
         
         label = Label(self, text="Your Bookshelf", font=('Arial', 18))
@@ -145,6 +146,9 @@ class mainLibGUI(tk.Tk):
         isbn = simpledialog.askstring("Input", "Add a ISBN",
                                  parent=self)
        #print(isbn)
+        if isbn == "":
+                messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
+                return
         if isbn == None:
                 return
         
@@ -157,8 +161,27 @@ class mainLibGUI(tk.Tk):
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
 
         
-    def viewAch(self):
-        return
+    def viewStats(self):
+        
+        Stats = Tk()
+        Stats.title("Library Statistics")
+
+
+        total_books = tk.Label(Stats, text="Books Added: ")
+        total_books.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
+        read_label = tk.Label(Stats, text="Books Completed: ")
+        read_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
+        read_label = tk.Label(Stats, text="Total Daily revisits: ")
+        read_label.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
+        read_label = tk.Label(Stats, text="Percentage Completed: ")
+        read_label.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
+
+        close_button = ttk.Button(Stats, text="return", command=Stats.destroy)
+        close_button.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+        
+
+    def closebutton(Stats):
+        return # destroy current window
     
     def updateGoals(self):
         print("daily is : " + str(self.daily.get()))
