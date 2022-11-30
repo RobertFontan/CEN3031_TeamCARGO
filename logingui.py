@@ -32,7 +32,7 @@ class titleScreen(tk.Tk):
         my_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         #add label to top of backround
-        intro_label = Label(self, text="WELCOME TO ENCYLOMEDIA", font=("Times New Roman bold",20), fg="black",)
+        intro_label = Label(self, text="WELCOME TO ENCYLOMEDIA", font=("Arial bold",20), fg="black",)
         intro_label.pack(pady=20)
         #create a frame
         login_frame = Frame(self)
