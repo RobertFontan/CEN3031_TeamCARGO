@@ -52,13 +52,13 @@ class mainLibGUI(tk.Tk):
         bookFrame.columnconfigure(3)
         bookFrame.columnconfigure(4)
 
-        self.book0 = tk.Button(bookFrame, bg="brown", command=self.setFav)
+        self.book0 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book0.grid(row=0, column=0, )
 
-        self.book1 = tk.Label(bookFrame, bg="brown")
+        self.book1 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book1.grid(row=0, column=1)
 
-        self.book2 = tk.Label(bookFrame, bg="brown")
+        self.book2 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book2.grid(row=0, column=2)
 
         self.book3 = tk.Label(bookFrame, bg="brown")
@@ -82,6 +82,8 @@ class mainLibGUI(tk.Tk):
         self.book9 = tk.Label(bookFrame, bg="brown")
         self.book9.grid(row=1, column=4)
         
+        self.daily = tk.IntVar()
+        self.completed = tk.IntVar()
         
 
         bookFrame.pack(fill='x')
@@ -158,13 +160,39 @@ class mainLibGUI(tk.Tk):
     def viewAch(self):
         return
     
-    def setFav(self):
-        pass
+    def updateGoals(self):
+        print("daily is : " + str(self.daily.get()))
+        print("completed is : " + str(self.completed.get()))
+        
+        
+    
+    def goalBox(self):
+        goalBox = Toplevel()
+        goalBox.title('Book Options')
+        tk.Checkbutton(goalBox, text = 'Did you read today?', variable=self.daily, onvalue=1, offvalue=0, command=self.updateGoals).pack()
+        tk.Checkbutton(goalBox, text = 'Completed Book', variable=self.completed, onvalue=1, offvalue=0, command=self.updateGoals).pack()
+        tk.Button(goalBox, text='OK', command=goalBox.destroy).pack()
+        #dailyRead.pack()
+        #completeBook.pack()
+        
+    
+            
+        #if goal = 'Book Added'
+        
          
+
         
 mainLibGUI()
 
 
+class goalGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("800x800")
+        self.title("Goals")
+        
+        
+    
 
 
 
