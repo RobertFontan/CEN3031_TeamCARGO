@@ -18,6 +18,7 @@ from isbngui import *
 
 
 libary = []
+
 #coverList = []
 #favList = []
 
@@ -108,7 +109,7 @@ class mainLibGUI(tk.Tk):
         newBook = libary[bookCounter]
         newCover = newBook.getCover()
         
-        print("from the book object" + newCover)
+        #print("from the book object" + newCover)
         #print(cv)
         
         u = urlopen(newCover)
@@ -175,6 +176,7 @@ class mainLibGUI(tk.Tk):
         
         try:
             newBook = lookup_isbn(isbn)
+            
             libary.append(newBook)
             
             # cover = lookup_cover(isbn)
