@@ -3,18 +3,25 @@ from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter.ttk import *
 from book import *
+from book import Book
 from tkinter import *
 from io import BytesIO
 from PIL import ImageTk, Image
 from tkinter import ttk
-
+import requests
+import os
+import urllib
+import io
 #coverList = ['9783426452936','9780553593716','0735219095','1791392792']
                 
 from isbngui import *
 
 
-coverList = []
-favList = []
+libary = []
+
+#coverList = []
+#favList = []
+
 
 
 class mainLibGUI(tk.Tk):
@@ -23,16 +30,14 @@ class mainLibGUI(tk.Tk):
         
         self.geometry("800x800")
         self.title("Encyclomedia")
-
+        
+        
         #adds a background
         bg2 = PhotoImage(file="images/libraryBR.png")
         #set and add backround
         gui_bk = Label(self, image = bg2, bg="black")
         gui_bk.place(x=0, y=0, relwidth=1, relheight=1)
         
-        
-        button = tk.Button(self, text="Update Books", font=('Arial', 18), command=self.replaceCovers)
-        button.pack(padx=10, pady=10)
         
         isbnButton = tk.Button(self, text="Add a book", font=('Arial', 18), command=self.addIsbn)
         isbnButton.pack(padx=10, pady=10)
@@ -62,7 +67,7 @@ class mainLibGUI(tk.Tk):
         self.book2 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book2.grid(row=0, column=2)
 
-        self.book3 = tk.Label(bookFrame, bg="brown")
+        self.book3 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book3.grid(row=0, column=3)
         
         self.book4 = tk.Label(bookFrame, bg="brown")
@@ -86,59 +91,78 @@ class mainLibGUI(tk.Tk):
         self.daily = tk.IntVar()
         self.completed = tk.IntVar()
         
+        self.bookCount = tk.IntVar(self, value=0, name = "bookCount")
 
         bookFrame.pack(fill='x')
         
 
-                
+        
         self.mainloop()
 
     
 
-    def replaceCovers(self):
-        bookCounter = 0
-        for cv in coverList:
-            print(cv)
-            u = urlopen(cv)
-            raw_data = u.read()
-            u.close()
-            image = ImageTk.PhotoImage(data=raw_data) 
+    def addCover(self):
+        bookCounter = self.bookCount.get()
+         
+        #cv = coverList[bookCounter]
+        
+        newBook = libary[bookCounter]
+        newCover = newBook.getCover()
+        
+        #print("from the book object" + newCover)
+        #print(cv)
+        
+        u = urlopen(newCover)
+        raw_data = u.read()
+        u.close()
+        image = ImageTk.PhotoImage(data=raw_data)
+        
+        # reponse = requests.get(newCover)
+        # img_data = reponse.content        
+        # image = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
+        
+        # raw_data = urllib.request.urlopen(newCover).read()
+        # im = Image.open(io.BytesIO(raw_data))
+        # image = ImageTk.PhotoImage(im)
+        
+        if bookCounter == 0:
+            self.book0.configure(image=image)
+            self.book0.image = image
+        elif bookCounter == 1:
+            self.book1.configure(image=image)
+            self.book1.image = image
+        elif bookCounter == 2:
+            self.book2.configure(image=image)
+            self.book2.image = image
+        elif bookCounter == 3:
+            self.book3.configure(image=image)
+            self.book3.image = image
+        elif bookCounter == 4:
+            self.book4.configure(image=image)
+            self.book4.image = image
+        elif bookCounter == 5:
+            self.book5.configure(image=image)
+            self.book5.image = image
+        elif bookCounter == 6:
+            self.book6.configure(image=image)
+            self.book6.image = image
+        elif bookCounter == 7:
+            self.book7.configure(image=image)
+            self.book7.image = image
+        elif bookCounter == 8:
+            self.book8.configure(image=image)
+            self.book8.image = image
+        elif bookCounter == 9:
+            self.book9.configure(image=image)
+            self.book9.image = image                
+        else:
+            pass
             
-            if bookCounter == 0:
-                self.book0.configure(image=image)
-                self.book0.image = image
-            elif bookCounter == 1:
-                self.book1.configure(image=image)
-                self.book1.image = image
-            elif bookCounter == 2:
-                self.book2.configure(image=image)
-                self.book2.image = image
-            elif bookCounter == 3:
-                self.book3.configure(image=image)
-                self.book3.image = image
-            elif bookCounter == 4:
-                self.book4.configure(image=image)
-                self.book4.image = image
-            elif bookCounter == 5:
-                self.book5.configure(image=image)
-                self.book5.image = image
-            elif bookCounter == 6:
-                self.book6.configure(image=image)
-                self.book6.image = image
-            elif bookCounter == 7:
-                self.book7.configure(image=image)
-                self.book7.image = image
-            elif bookCounter == 8:
-                self.book8.configure(image=image)
-                self.book8.image = image
-            elif bookCounter == 9:
-                self.book9.configure(image=image)
-                self.book9.image = image                
-            else:
-                pass
+        bookCounter = bookCounter + 1
             
-            bookCounter = bookCounter + 1
+        self.bookCount.set(bookCounter)
             
+        #    self.bookCount = self.bookCount.get() + 1 
     
     def addIsbn(self):
         #self.gui_bk.image = self.gui_bk.image
@@ -146,22 +170,27 @@ class mainLibGUI(tk.Tk):
         isbn = simpledialog.askstring("Input", "Add a ISBN",
                                  parent=self)
        #print(isbn)
-        if isbn == "":
-                messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
-                return
+        
         if isbn == None:
                 return
         
         try:
-            cover = lookup_cover(isbn)
-            coverList.append(cover)
-            self.replaceCovers()
+            newBook = lookup_isbn(isbn)
+            
+            libary.append(newBook)
+            
+            # cover = lookup_cover(isbn)
+            # coverList.append(cover)
+            self.addCover()
 
         except Exception:
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
 
         
     def viewStats(self):
+        
+        print("The value of bookCount is: ", self.getvar(name="bookCount"))
+        
         
         Stats = Tk()
         Stats.title("Library Statistics")
@@ -202,20 +231,17 @@ class mainLibGUI(tk.Tk):
             
         #if goal = 'Book Added'
         
-         
-
         
 mainLibGUI()
 
 
-class goalGUI(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry("800x800")
-        self.title("Goals")
-        
-        
-    
 
 
 
+    # tempList = ['9780394533056',
+        #             '9780553593716',
+        #             '0735219095',
+        #             '1791392792',
+        #             '1501161938',
+        #             '0062653318',
+        #             '1538719843']
