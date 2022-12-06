@@ -35,7 +35,7 @@ class LibraryModel(object):
 libModel = LibraryModel()
 
 class mainLibGUI(tk.Tk):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
         # intializes the main gui        
         self.geometry("800x800")
@@ -49,7 +49,7 @@ class mainLibGUI(tk.Tk):
         # set and add background
         canvas = Canvas(self, width=2000, height=2000 )
         canvas.create_image(400,400, anchor=CENTER, image = bg2)
-        canvas.create_text(115,40, anchor=CENTER, text="Bookshelf", font=('Arial', 30, 'bold'), fill = "black")
+        canvas.create_text(10,40, anchor="w", text=username + "'s Bookshelf", font=('Arial', 30, 'bold'), fill = "black")
 
         canvas.place(x=0, y=0, relwidth=1, relheight=1)
        
