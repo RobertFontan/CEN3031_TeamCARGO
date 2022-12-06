@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, UnicodeText
+from sqlalchemy import Column, Integer, Boolean, UnicodeText
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base

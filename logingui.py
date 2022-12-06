@@ -1,16 +1,34 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+from tkinter import messagebox
 
 from mainlibrarygui import mainLibGUI
+import userdb
+
+class UsersModel(object):
+	def __init__(self):
+		self.session = userdb.create_session()
+	
+	def add_user(self, username, password):
+		return userdb.add_user(self.session, username, password)
+	
+	def contains_user(self, username, password):
+		return userdb.contains_user(self.session, username, password)
+
+users = UsersModel()
 
 class titleScreen(tk.Tk):
     def loginButton(self):
+        if not users.contains_user(self.username_entry.get(), self.password_entry.get()):
+            messagebox.showwarning(title="Error", message="Invalid username or password!")
+            return
         self.destroy()  # destroy current window
         self.app = mainLibGUI()
 
     #goes to new user window
     def newUser(self):
+        # TODO: users.add_user(username, password)
         self.destroy()  # destroy current window
         # self.app = newuserScreen()
 
@@ -47,16 +65,16 @@ class titleScreen(tk.Tk):
         username_label = tk.Label(login_frame, text="Username:")
         username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
 
-        username_entry = tk.Entry(login_frame)
-        username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
+        self.username_entry = tk.Entry(login_frame)
+        self.username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
 
 
         # password
         password_label = ttk.Label(login_frame, text="Password:")
         password_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
 
-        password_entry = ttk.Entry(login_frame,  show="*")
-        password_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
+        self.password_entry = ttk.Entry(login_frame,  show="*")
+        self.password_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
 
         # login button
         login_button = ttk.Button(login_frame, text="Login", command=self.loginButton)
