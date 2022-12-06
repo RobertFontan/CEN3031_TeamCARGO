@@ -293,5 +293,4 @@ class mainLibGUI(tk.Tk):
         tk.Button(goalBox, text='OK', command=goalBox.destroy).pack()
 
         
-mainLibGUI()
 
