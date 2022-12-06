@@ -16,8 +16,22 @@ import io
                 
 from isbngui import *
 
+import bookdb
 
-libary = []
+class LibraryModel(object):
+	def __init__(self):
+		self.session = bookdb.create_session()
+	
+	def get_books(self):
+		return bookdb.get_books(self.session)
+	
+	def add_book(self, book):
+		return bookdb.add_book(self.session, book)
+	
+	def remove_book(self, book):
+		return bookdb.remove_book(self.session, book.isbn)
+
+libModel = LibraryModel()
 
 #coverList = []
 #favList = []
@@ -95,18 +109,18 @@ class mainLibGUI(tk.Tk):
 
         bookFrame.pack(fill='x')
         
-
+        for book in libModel.get_books():
+            self.addCover(book)
         
         self.mainloop()
 
     
 
-    def addCover(self):
+    def addCover(self, newBook):
         bookCounter = self.bookCount.get()
          
         #cv = coverList[bookCounter]
         
-        newBook = libary[bookCounter]
         newCover = newBook.getCover()
         
         #print("from the book object" + newCover)
@@ -177,11 +191,11 @@ class mainLibGUI(tk.Tk):
         try:
             newBook = lookup_isbn(isbn)
             
-            libary.append(newBook)
+            libModel.add_book(newBook)
             
             # cover = lookup_cover(isbn)
             # coverList.append(cover)
-            self.addCover()
+            self.addCover(newBook)
 
         except Exception:
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
