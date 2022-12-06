@@ -15,7 +15,7 @@ import io
 import time
 #coverList = ['9783426452936','9780553593716','0735219095','1791392792']
                 
-from isbngui import *
+#from isbngui import *
 
 import bookdb
 
