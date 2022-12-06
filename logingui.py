@@ -20,11 +20,13 @@ users = UsersModel()
 
 class titleScreen(tk.Tk):
     def loginButton(self):
-        if not users.contains_user(self.username_entry.get(), self.password_entry.get()):
+        user = str(self.username_entry.get())
+        passw = str(self.password_entry.get())
+        if not users.contains_user(user, passw):
             messagebox.showwarning(title="Error", message="Invalid username or password!")
             return
         self.destroy()  # destroy current window
-        self.app = mainLibGUI()
+        self.app = mainLibGUI(user)
 
     #goes to new user window
     def newUser(self):
