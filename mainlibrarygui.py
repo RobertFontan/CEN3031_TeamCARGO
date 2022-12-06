@@ -59,7 +59,6 @@ class mainLibGUI(tk.Tk):
         
         
         
-        self.wm_attributes("-transparentcolor", "red")
         # established some main library buttons
         isbnButton = tk.Button(self, text="Add a book", font=('Arial', 18), command=self.addIsbn)
         isbnButton.place(x=390, y =20)
