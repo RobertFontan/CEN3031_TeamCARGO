@@ -85,23 +85,25 @@ class mainLibGUI(tk.Tk):
         self.book3 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book3.grid(row=0, column=3)
         
-        self.book4 = tk.Label(bookFrame, bg="brown")
+        self.book4 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book4.grid(row=0, column=4)
         
-        self.book5 = tk.Label(bookFrame, bg="brown")
+        self.book5 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book5.grid(row=1, column=0)
         
-        self.book6 = tk.Label(bookFrame, bg="brown")
+        self.book6 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book6.grid(row=1, column=1)
         
-        self.book7 = tk.Label(bookFrame, bg="brown")
+        self.book7 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book7.grid(row=1, column=2)
         
-        self.book8 = tk.Label(bookFrame, bg="brown")
+        self.book8 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book8.grid(row=1, column=3)
         
-        self.book9 = tk.Label(bookFrame, bg="brown")
+        self.book9 = tk.Button(bookFrame, bg="brown", command=self.goalBox)
         self.book9.grid(row=1, column=4)
+        
+        #self.book10 = tk.Button(bookFrame)
         
         self.daily = tk.IntVar()
         self.completed = tk.IntVar()
@@ -124,24 +126,26 @@ class mainLibGUI(tk.Tk):
         bookCounter = self.bookCount.get()
          
         #cv = coverList[bookCounter]
+        print(newBook.getISBN())
         
         newCover = newBook.getCover()
         
+        print(newCover)        
         #print("from the book object" + newCover)
         #print(cv)
         
-        u = urlopen(newCover)
-        raw_data = u.read()
-        u.close()
-        image = ImageTk.PhotoImage(data=raw_data)
+        # u = urlopen(newCover)
+        # raw_data = u.read()
+        # u.close()
+        # image = ImageTk.PhotoImage(data=raw_data)
         
         # reponse = requests.get(newCover)
         # img_data = reponse.content        
         # image = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
         
-        # raw_data = urllib.request.urlopen(newCover).read()
-        # im = Image.open(io.BytesIO(raw_data))
-        # image = ImageTk.PhotoImage(im)
+        raw_data = urllib.request.urlopen(newCover).read()
+        im = Image.open(io.BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
         
         if bookCounter == 0:
             self.book0.configure(image=image)
@@ -183,8 +187,6 @@ class mainLibGUI(tk.Tk):
         #    self.bookCount = self.bookCount.get() + 1 
     
     def addIsbn(self):
-        #self.gui_bk.image = self.gui_bk.image
-
         isbn = simpledialog.askstring("Input", "Add a ISBN",
                                  parent=self)
        #print(isbn)
@@ -194,13 +196,8 @@ class mainLibGUI(tk.Tk):
         
         try:
             newBook = lookup_isbn(isbn)
-            
             libModel.add_book(newBook)
-            
-            # cover = lookup_cover(isbn)
-            # coverList.append(cover)
             self.addCover(newBook)
-
         except Exception:
             messagebox.showwarning(title="Error", message="Couldn't find the ISBN!")
 
@@ -256,23 +253,7 @@ class mainLibGUI(tk.Tk):
         tk.Checkbutton(goalBox, text = 'Did you read today?', variable=self.daily, onvalue= 1, offvalue=0, command=self.updateDaily).pack()
         tk.Checkbutton(goalBox, text = 'Completed a Book', variable=self.completed, onvalue= 1, offvalue=0, command=self.updateCompleted).pack()
         tk.Button(goalBox, text='OK', command=goalBox.destroy).pack()
-        #dailyRead.pack()
-        #completeBook.pack()
-        
-            
-        #if goal = 'Book Added'
-        
+
         
 mainLibGUI()
 
-
-
-
-
-    # tempList = ['9780394533056',
-        #             '9780553593716',
-        #             '0735219095',
-        #             '1791392792',
-        #             '1501161938',
-        #             '0062653318',
-        #             '1538719843']
