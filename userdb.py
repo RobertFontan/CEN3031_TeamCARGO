@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///library.db', echo=False)
+engine = create_engine('sqlite:///users.db', echo=False)
 Base = declarative_base(bind=engine)
 
 class SerializedUser(Base):
