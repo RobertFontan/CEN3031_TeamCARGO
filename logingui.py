@@ -28,9 +28,8 @@ class titleScreen(tk.Tk):
 
     #goes to new user window
     def newUser(self):
-        # TODO: users.add_user(username, password)
-        self.destroy()  # destroy current window
-        # self.app = newuserScreen()
+        users.add_user(self.username_entry.get(), self.password_entry.get())
+        messagebox.showwarning(title="Success", message="New user created!")
 
     
     def __init__(self):
