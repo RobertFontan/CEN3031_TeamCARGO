@@ -12,6 +12,7 @@ import requests
 import os
 import urllib
 import io
+import time
 #coverList = ['9783426452936','9780553593716','0735219095','1791392792']
                 
 from isbngui import *
@@ -138,6 +139,9 @@ class mainLibGUI(tk.Tk):
         self.completed = tk.IntVar()
         
         self.bookCount = tk.IntVar(self, value=0, name = "bookCount")
+        #counter for daily and complete to be used in statistics
+        self.DCount = tk.IntVar(self, value=0, name = "Dcount")
+        self.CCount = tk.IntVar(self, value=0, name = "Ccount")
 
         bookFrame.pack(padx =10, fill='x')
    
@@ -242,18 +246,25 @@ class mainLibGUI(tk.Tk):
         
         print("The value of bookCount is: ", self.getvar(name="bookCount"))
         
-        
+        #how the statistics box works
         Stats = Tk()
         Stats.title("Library Statistics")
-
-
-        total_books = tk.Label(Stats, text="Books Added: ")
+        count = self.bookCount.get()
+        total_books = tk.Label(Stats, text="Books Added: " + str(count))
         total_books.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
-        read_label = tk.Label(Stats, text="Books Completed: ")
+        read_label = tk.Label(Stats, text="Books Completed: " + str(self.CCount.get()))
         read_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
-        read_label = tk.Label(Stats, text="Total Daily revisits: ")
+        read_label = tk.Label(Stats, text="Total Daily revisits: " + str(self.DCount.get()))
         read_label.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
-        read_label = tk.Label(Stats, text="Percentage Completed: ")
+        percDOne = 0
+        #corrects a divide by zero error when there are no books added
+        if count == 0:
+            percDOne = 1
+        else: 
+            percDOne = (self.completed.get()/count)
+        
+        
+        read_label = tk.Label(Stats, text="Percentage Completed: " + str(percDOne*100) + "%")
         read_label.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
 
         close_button = ttk.Button(Stats, text="return", command=Stats.destroy)
@@ -263,18 +274,25 @@ class mainLibGUI(tk.Tk):
     def closebutton(Stats):
         return # destroy current window
     
-    def updateGoals(self):
-        print("daily is : " + str(self.daily.get()))
-        print("completed is : " + str(self.completed.get()))
+    def updateDaily(self):
+        #increments daily
+        if self.daily.get() == 1:
+            self.DCount.set(self.DCount.get()+1)
+    def updateCompleted(self):
+        #increments completed
+        if self.completed.get() == 1:
+            self.CCount.set(self.CCount.get()+1)
+        
+
         
     # when clicking a book gives dialog to update it
     def goalBox(self):
         goalBox = Toplevel()
         goalBox.title('Book Options')
-        tk.Checkbutton(goalBox, text = 'Did you read today?', variable=self.daily, onvalue=1, offvalue=0, command=self.updateGoals).pack()
-        tk.Checkbutton(goalBox, text = 'Completed Book', variable=self.completed, onvalue=1, offvalue=0, command=self.updateGoals).pack()
+        tk.Checkbutton(goalBox, text = 'Did you read today?', variable=self.daily, onvalue= 1, offvalue=0, command=self.updateDaily).pack()
+        tk.Checkbutton(goalBox, text = 'Completed a Book', variable=self.completed, onvalue= 1, offvalue=0, command=self.updateCompleted).pack()
         tk.Button(goalBox, text='OK', command=goalBox.destroy).pack()
-    
+
         
 mainLibGUI()
 
