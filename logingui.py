@@ -6,13 +6,17 @@ from tkinter import messagebox
 from mainlibrarygui import mainLibGUI
 import userdb
 
+# Model controller for the user database
 class UsersModel(object):
 	def __init__(self):
+        # Create a database connection
 		self.session = userdb.create_session()
 	
+    # Create a new user
 	def add_user(self, username, password):
 		return userdb.add_user(self.session, username, password)
 	
+    # Authenticate a user
 	def contains_user(self, username, password):
 		return userdb.contains_user(self.session, username, password)
 
