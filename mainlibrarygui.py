@@ -260,7 +260,7 @@ class mainLibGUI(tk.Tk):
         if count == 0:
             percDOne = 1
         else: 
-            percDOne = (self.completed.get()/count)
+            percDOne = (self.CCount.get()/count)
         
         
         read_label = tk.Label(Stats, text="Percentage Completed: " + str(percDOne*100) + "%")
